@@ -24,10 +24,16 @@ public class ExternalAppDatabase {
 	private final String PREFERENCES_KEY = "PREFERENCES_KEY";
 
 	boolean isAllowed(String packagename) {
-		Set<String> allowedapps = getExtAppList();
+		boolean result;
+		//always allow videro !
+		if(packagename.contentEquals("com.videro")){
+			result = true;
+		}else {
+			Set<String> allowedapps = getExtAppList();
 
-		return allowedapps.contains(packagename); 
-
+			result = allowedapps.contains(packagename);
+		}
+		return result;
 	}
 
 	public Set<String> getExtAppList() {

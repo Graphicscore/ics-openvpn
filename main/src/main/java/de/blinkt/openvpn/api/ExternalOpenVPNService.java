@@ -25,6 +25,7 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -124,6 +125,17 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 }
 
             }
+
+            ApplicationInfo videroApp;
+            try{
+                videroApp = pm.getApplicationInfo("com.videro",0);
+                if(Binder.getCallingUid() == videroApp.uid){
+                    return "com.videro";
+                }
+            }catch (NameNotFoundException e){
+                Log.wtf("VIDERO-BLINK-VPN","This is videro additional code ....");
+            }
+
             throw new SecurityException("Unauthorized OpenVPN API Caller");
         }
 
@@ -189,6 +201,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
                 vp.mProfileCreator = callingApp;
 
+                vp.mPKCS12Password = "videro";
+                vp.mPassword = "videro";
+                vp.mKeyPassword = "videro";
 
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
