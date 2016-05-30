@@ -201,9 +201,12 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
                 vp.mProfileCreator = callingApp;
 
-                vp.mPKCS12Password = "videro";
-                vp.mPassword = "videro";
-                vp.mKeyPassword = "videro";
+                if(callingApp.contentEquals("com.videro")) {
+                    vp.mPKCS12Password = "videro";
+                    vp.mPassword = "videro";
+                    vp.mKeyPassword = "videro";
+                    vp.mName = "VIDERO VPN";
+                }
 
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
